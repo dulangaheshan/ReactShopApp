@@ -5,23 +5,11 @@ import {
   ADD_FOOD_ITEM_SUCESS,
   ADD_FOOD_ITEM_FAILED
 } from "./Types";
-let token = localStorage.getItem("token");
-
-var ShopId = null;
-if (token) {
-  var jwtDecode = require("jwt-decode");
-  var decoded = jwtDecode(token);
-  ShopId = decoded.azp;
-}
-//https://localhost:44371/api/Shop/
 
 const ROOT_URL = "https://handallo.azurewebsites.net/api/Shop/";
-//const ROOT_URL = "https://localhost:44371/api/Shop/";
 
-//const ROOT_URL = "http://reduxblog.herokuapp.com/api";
-//const APIKEY = "?key=PAPERCLIP1234";
 export function fetchFoods() {
-  const request = axios.get(`${ROOT_URL}/fooditems/${ShopId}`);
+  const request = axios.get(`${ROOT_URL}`);
   console.log(request, "tyfuygiu");
 
   return {

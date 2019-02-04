@@ -47,39 +47,36 @@ export function LoginAction(values, callback) {
   };
 }
 
-export function RegisterOwnerAction(values) {
+export function RegisterOwnerAction(values, callback) {
   console.log(values);
   const body = {
-    firstname: values.firstname,
-    lastname: values.lastname,
-    mobileno: values.contactnumber,
+    firstName: values.firstname,
+    lastName: values.lastname,
+    mobileNo: values.contactnumber,
     email: values.email,
-    pass_word: values.pass_word
+    password: values.pass_word
   };
-  console.log(body);
+  console.log(body, "mmmmmmmmmmmmmmmmmmmmmmmmmmmmmm");
   var headers = {
     "Content-Type": "application/json"
   };
-  //https://localhost:44371
+
   return dispatch => {
-    dispatch({ type: REGISTER_OWNER }); //https://handallo.azurewebsites.net/api/ShopOwner/register
+    dispatch({ type: REGISTER_OWNER });
     axios
-      .post(`https://handallo.azurewebsites.net/api/ShopOwner/register`, body, {
-        //.post(`https://localhost:44371/api/ShopOwner/register`, body, {
+      .post(`http://torrid-app.herokuapp.com/users/addAdmin`, body, {
         headers: headers
       })
       .then(response => {
-        console.log(response);
+        //console.log(response);
         if (response.status === 200) {
-          console.log(response);
-          const data = response.data;
-
-          regesterSucess(dispatch, data);
+          console.log(response, "gggggggggggggggggggggggggggg");
+          //   const data = response.data;
         } else {
           registerFailed(dispatch);
         }
       })
-      //.then(() => callback())
+      .then(() => callback())
       .catch(() => registerFailed(dispatch));
   };
 }
@@ -89,35 +86,22 @@ export default function LogoutAction(callback) {
 }
 
 const regesterSucess = (dispatch, data) => {
-  //localStorage.set("token", data.access_token);
-  localStorage.setItem("token", data.token);
-  //localStorage.get('itemName')
-  //console.log(data);
-  //console.log(localStorage.get("token"));
-  // var jwtDecode = require("jwt-decode");
-  // var decoded = jwtDecode(data.token);
-  // //var user = decoded.sub;
-  // console.log(decoded);
   dispatch({
     type: REGISTER_OWNER_SUCESS,
-    payload: data.token
+    payload: data.msg
   });
 };
 
 const registerFailed = dispatch => {
-  //console.log(response);
   dispatch({ type: REGISTER_OWNER_FAILED });
 };
 
 const loginSucess = (dispatch, data) => {
-  //localStorage.set("token", data.access_token);
   localStorage.setItem("token", data.token);
-  //localStorage.get('itemName')
-  //console.log(data);
-  //console.log(localStorage.get("token"));
+
   var jwtDecode = require("jwt-decode");
   var decoded = jwtDecode(data.token);
-  //var user = decoded.sub;
+
   console.log(decoded);
   dispatch({
     type: LOGIN_ADMIN_SUCESS,

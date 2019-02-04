@@ -7,7 +7,7 @@ import { Provider } from "react-redux";
 import { createStore, applyMiddleware } from "redux";
 
 import { BrowserRouter, Switch, Route } from "react-router-dom";
-import Login from "./components/Auth/Login";
+import CustomerLogin from "./components/Auth/CustomerLogin";
 import ForgotPassword from "./components/Auth/ForgotPassword";
 
 import thunk from "redux-thunk";
@@ -19,6 +19,7 @@ import Home from "./components/Main/Home";
 
 import Shop from "./components/Main/Shop";
 import RegisterAdmin from "./components/Auth/RegisterAdmin";
+import AdminLogin from "./components/Auth/AdminLogin";
 
 const createStoreWithMiddleware = applyMiddleware(thunk, promise)(createStore);
 
@@ -29,6 +30,7 @@ ReactDOM.render(
         <Switch>
           <Route path="/forgotpassword" component={ForgotPassword} />
           <Route path="/shop" component={Shop} />
+          <Route path="/adminlogin" component={AdminLogin} />
           <Route path="/registeradmin" component={RegisterAdmin} />
           <Route path="/" component={Home} />
         </Switch>

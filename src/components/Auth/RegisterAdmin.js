@@ -29,7 +29,9 @@ class RegisterAdmin extends Component {
 
   onSubmit(values) {
     // console.log(values);
-    this.props.RegisterOwnerAction(values);
+    this.props.RegisterOwnerAction(values, () => {
+      this.props.history.push("/adminlogin");
+    });
   }
 
   render() {

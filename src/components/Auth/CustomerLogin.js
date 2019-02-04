@@ -7,7 +7,7 @@ import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 import CircularProgress from "@material-ui/core/CircularProgress";
 
-class Login extends Component {
+class CustomerLogin extends Component {
   renderField(field) {
     const className = `form-group ${
       field.meta.touched && field.meta.error ? "has-danger" : ""
@@ -123,5 +123,5 @@ export default reduxForm({
   connect(
     mapStateToProps,
     { LoginAction }
-  )(Login)
+  )(CustomerLogin)
 );
