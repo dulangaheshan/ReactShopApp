@@ -10,16 +10,16 @@ import {
   LOGOUT_USER
 } from "./Types"; //https://localhost:44371/api/
 
-const ROOT_URL = "https://handallo.azurewebsites.net/api/"; //https://handallo.azurewebsites.net/api/Shop/register
-//const ROOT_URL = "https://localhost:44371/api/";
+// const ROOT_URL = "https://handallo.azurewebsites.net/api/"; //https://handallo.azurewebsites.net/api/Shop/register
+// //const ROOT_URL = "https://localhost:44371/api/";
 export function LoginAction(values, callback) {
   console.log(values);
 
   const body = {
     email: values.email,
-    pass_word: values.password
+    password: values.password
   };
-  console.log(body);
+  console.log(body, "dfghwdefgh");
   var headers = {
     "Content-Type": "application/json"
   };
@@ -27,17 +27,13 @@ export function LoginAction(values, callback) {
   return dispatch => {
     dispatch({ type: LOGIN_ADMIN });
     axios
-      .post(`${ROOT_URL}ShopOwner/Login`, body, { headers: headers })
+      .post(`http://torrid-app.herokuapp.com/users/loginadmin`, body, {
+        headers: headers
+      })
       .then(response => {
-        if (response.status === 204) {
-          addShop(dispatch);
-        }
         console.log(response);
         if (response.status === 200) {
-          console.log(response.data);
-          const data = response.data;
-
-          loginSucess(dispatch, data);
+          console.log(response, "gggggggggggggggggggggggggggg");
         } else {
           loginFailed(dispatch);
         }

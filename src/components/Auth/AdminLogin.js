@@ -26,7 +26,7 @@ class AdminLogin extends Component {
   onSubmit(values) {
     console.log(values);
     this.props.LoginAction(values, () => {
-      this.props.history.push("/shop");
+      this.props.history.push("/adminmain");
     });
   }
 
