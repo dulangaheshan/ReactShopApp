@@ -1,21 +1,11 @@
 import React, { Component } from "react";
 import { Field, reduxForm } from "redux-form";
-import {
-  Container,
-  Row,
-  Col,
-  Input,
-  Button,
-  Fa,
-  Card,
-  CardBody
-} from "mdbreact";
+import { Input, Button, Card, CardBody } from "mdbreact";
 import { RegisterOwnerAction } from "../../actions";
 import { connect } from "react-redux";
-import CircularProgress from "@material-ui/core/CircularProgress";
 import { Link } from "react-router-dom";
 
-class RegisterOwner extends Component {
+class RegisterAdmin extends Component {
   state = {};
 
   renderField(field) {
@@ -34,29 +24,6 @@ class RegisterOwner extends Component {
           {field.meta.touched ? field.meta.error : ""}
         </div>
       </div>
-    );
-  }
-
-  renderError() {
-    if (this.props.error) {
-      console.log(this.props.error);
-      return <div className="form-group has-danger">{this.props.error}</div>;
-    }
-  }
-
-  renderButton() {
-    if (this.props.loading) {
-      return (
-        <div>
-          <p>wait untill progress complete</p>
-          <CircularProgress color="secondary" />
-        </div>
-      );
-    }
-    return (
-      <Button type="submit" color="danger">
-        Register
-      </Button>
     );
   }
 
@@ -103,14 +70,9 @@ class RegisterOwner extends Component {
                 type="password"
                 component={this.renderField}
               />
-              <Field
-                label="Repaeat Password"
-                name="repeatpassword"
-                type="password"
-                component={this.renderField}
-              />
-              <div>{this.renderError()}</div>
-              <div>{this.renderButton()}</div>
+              <Button type="submit" color="danger">
+                Register
+              </Button>
             </div>
           </form>
           <Link to="/login" className="btn btn-danger">
@@ -162,10 +124,10 @@ const mapStateToProps = state => {
 
 export default reduxForm({
   validate,
-  form: "registershop"
+  form: "registeradmin"
 })(
   connect(
     mapStateToProps,
     { RegisterOwnerAction }
-  )(RegisterOwner)
+  )(RegisterAdmin)
 );
