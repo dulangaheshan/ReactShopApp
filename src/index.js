@@ -1,18 +1,38 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import './index.css';
-import App from './App';
-import * as serviceWorker from './serviceWorker';
+import React from "react";
+import ReactDOM from "react-dom";
+import "font-awesome/css/font-awesome.min.css";
+import "bootstrap-css-only/css/bootstrap.min.css";
+import "mdbreact/dist/css/mdb.css";
+import { Provider } from "react-redux";
+import { createStore, applyMiddleware } from "redux";
 
-//mdb bootstrap
-import "@fortawesome/fontawesome-free/css/all.min.css";
-import 'bootstrap-css-only/css/bootstrap.min.css'; 
-import 'mdbreact/dist/css/mdb.css';
+import { BrowserRouter, Switch, Route } from "react-router-dom";
+import Login from "./components/Auth/Login";
+import ForgotPassword from "./components/Auth/ForgotPassword";
 
+import thunk from "redux-thunk";
+import promise from "redux-promise";
 
-ReactDOM.render(<App />, document.getElementById('root'));
+import reducers from "./reducers";
 
-// If you want your app to work offline and load faster, you can change
-// unregister() to register() below. Note this comes with some pitfalls.
-// Learn more about service workers: http://bit.ly/CRA-PWA
-serviceWorker.unregister();
+import Home from "./components/Main/Home";
+
+import Shop from "./components/Main/Shop";
+
+const createStoreWithMiddleware = applyMiddleware(thunk, promise)(createStore);
+
+ReactDOM.render(
+  <Provider store={createStoreWithMiddleware(reducers)}>
+    <BrowserRouter>
+      <div>
+        <Switch>
+          <Route path="/forgotpassword" component={ForgotPassword} />
+          <Route path="/shop" component={Shop} />
+          <Route path="/login" component={Login} />
+          <Route path="/" component={Home} />
+        </Switch>
+      </div>
+    </BrowserRouter>
+  </Provider>,
+  document.getElementById("root")
+);

@@ -1,10 +1,13 @@
 import React, { Component } from "react";
-import { Container, Col, Card, CardBody } from "mdbreact";
 import { Field, reduxForm } from "redux-form";
+import { Container, Col, Card, CardBody } from "mdbreact";
+import { LoginAction } from "../../actions";
+import { connect } from "react-redux";
 
 import { Link } from "react-router-dom";
+import CircularProgress from "@material-ui/core/CircularProgress";
 
-class LoginAdmin extends Component {
+class Login extends Component {
   renderField(field) {
     const className = `form-group ${
       field.meta.touched && field.meta.error ? "has-danger" : ""
@@ -20,8 +23,36 @@ class LoginAdmin extends Component {
     );
   }
 
+  renderError() {
+    if (this.props.error) {
+      console.log(this.props.error);
+      return <div className="form-group has-danger">{this.props.error}</div>;
+    }
+  }
+
+  renderButton() {
+    if (this.props.loading) {
+      return (
+        <div>
+          <CircularProgress color="secondary" />
+        </div>
+      );
+    }
+    return (
+      <button
+        type="submit"
+        className="btn btn-pink btn-block btn-rounded z-depth-1"
+      >
+        Login
+      </button>
+    );
+  }
+
   onSubmit(values) {
     console.log(values);
+    this.props.LoginAction(values, () => {
+      this.props.history.push("/shop");
+    });
   }
 
   render() {
@@ -47,12 +78,8 @@ class LoginAdmin extends Component {
                     type="password"
                     component={this.renderField}
                   />
-                  <button
-                    type="submit"
-                    className="btn btn-pink btn-block btn-rounded z-depth-1"
-                  >
-                    Login
-                  </button>
+                  <div>{this.renderError()}</div>
+                  <div>{this.renderButton()}</div>
                 </div>
               </form>
               <Link to="/forgotpassword">Forgot Password</Link>
@@ -66,6 +93,35 @@ class LoginAdmin extends Component {
   }
 }
 
+function validate(values) {
+  const errors = {};
+
+  if (!values.email) {
+    errors.email = "Cannot Be Empty!";
+  } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email)) {
+    errors.email = "Invalid email address";
+  }
+  if (!values.password) {
+    errors.password = "Cannot Be Empty!";
+  }
+
+  return errors;
+}
+
+const mapStateToProps = state => {
+  console.log(state);
+  return {
+    error: state.auth.error,
+    loading: state.auth.loading
+  };
+};
+
 export default reduxForm({
+  validate,
   form: "adminlogin"
-})(LoginAdmin);
+})(
+  connect(
+    mapStateToProps,
+    { LoginAction }
+  )(Login)
+);

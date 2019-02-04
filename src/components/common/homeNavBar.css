@@ -1,0 +1,9 @@
+.white-text {
+  font-size: 40px;
+  /* background: rgb(0, 0, 0); /* Fallback color */
+  /* background: rgba(0, 0, 0, 0.5); */
+}
+
+.navbar {
+  opacity: 0.6;
+}
