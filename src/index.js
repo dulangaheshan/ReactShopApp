@@ -18,6 +18,7 @@ import reducers from "./reducers";
 import Home from "./components/Main/Home";
 
 import Shop from "./components/Main/Shop";
+import RegisterAdmin from "./components/Auth/RegisterAdmin";
 
 const createStoreWithMiddleware = applyMiddleware(thunk, promise)(createStore);
 
@@ -28,7 +29,7 @@ ReactDOM.render(
         <Switch>
           <Route path="/forgotpassword" component={ForgotPassword} />
           <Route path="/shop" component={Shop} />
-          <Route path="/login" component={Login} />
+          <Route path="/registeradmin" component={RegisterAdmin} />
           <Route path="/" component={Home} />
         </Switch>
       </div>
